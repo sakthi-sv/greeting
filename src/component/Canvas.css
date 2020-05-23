@@ -2,12 +2,24 @@ button{
     background-color: aqua; 
     border: none;
     color: black;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 14px;
   }
+  input[type="file"] {
+    visibility: hidden;
+}
+.file-upload {
+    background-color: rgb(59, 245, 12); 
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding:10px;
+    cursor: pointer;
+    border-radius: 14px;
+}

@@ -10,7 +10,6 @@ export default class Canvas extends Component {
     this.state = {
       ChImg: false,
       ChText:false,
-      Edit:false,
       SelectedFile: "",
       ctx: "",
       x: 0,
@@ -43,9 +42,9 @@ export default class Canvas extends Component {
   fileChangeHandler = (event) => {
     console.log(event.target.files);
 
-    this.setState(()=>{
-      return {SelectedFile: URL.createObjectURL(event.target.files[0])}
-    });
+    this.setState(
+      {SelectedFile: URL.createObjectURL(event.target.files[0])}
+    );
     this.drawImage();
   };
   drawLine = () => {
@@ -77,12 +76,12 @@ export default class Canvas extends Component {
   exportCanvas=()=>{
     const canvasimg=  this.canvasRef.current.toDataURL()
     localStorage.setItem("canvas",canvasimg)
+    alert("exported to local storage");
   }
   render() {
     const {
       ChImg,
-      ChText,
-      
+      ChText,      
       SelectedFile,
       x,
       y,
@@ -107,7 +106,11 @@ export default class Canvas extends Component {
           }}
         />
         
-        {ChImg && <input type="file" onChange={this.fileChangeHandler}></input>}
+        {ChImg && 
+        <label className="file-upload"> upload
+        <input type="file" onChange={this.fileChangeHandler}></input>
+        </label>
+        }
         <button
           onClick={() => {
             this.setState((prevState, props) => {
@@ -115,10 +118,9 @@ export default class Canvas extends Component {
             });
           }}
         >
-          {ChImg ? "close" : "change Image"}
+          {ChImg ? "close" : "Image"}
         </button>
-        <button onClick={this.drawLine}>draw Line</button>
-        <button onClick={this.drawCircle}>draw Circle</button>
+        
         <button
           onClick={() => {
             this.setState((prevState, props)=>{
@@ -127,7 +129,7 @@ export default class Canvas extends Component {
             
           }}
         >
-          {ShowColorPicker ? "Close" : "Change color"}
+          {ShowColorPicker ? "Close" : "color"}
         </button>
         {ShowColorPicker && (
           <SliderPicker
@@ -139,6 +141,9 @@ export default class Canvas extends Component {
             }}
           />
         )}
+        <button onClick={
+          this.drawLine}>Line</button>
+        <button onClick={this.drawCircle}>Circle</button>
         {
             ChText &&
             <textarea
@@ -155,10 +160,10 @@ export default class Canvas extends Component {
             this.setState((prevState, props) => {
                 return { ChText: !prevState.ChText };
             });
-            //this.drawText
+            this.drawText()
         }}
         >
-            {ChText?"Apply":"Create Text"}</button>
+            {ChText?"Apply":"Text"}</button>
         <button onClick={this.importCanvas}>Import</button>
         <button onClick={this.exportCanvas}>Export</button>
         <img
